@@ -7,7 +7,7 @@
 
 Name:		psb-kmod
 Version:	4.41.1
-Release:	11%{?dist}
+Release:	12%{?dist}
 Summary:	Kernel module for Poulsbo graphics chipsets
 
 Group:		System Environment/Kernel
@@ -34,6 +34,8 @@ Patch4:		psb-kernel-source-4.41.1-drmpsb.patch
 Patch5:		psb-kernel-source-4.41.1-i2c-intelfb.patch
 # Fix build for 2.6.32 (from Gentoo via Mandriva)
 Patch6:		psb-kernel-source-4.41.1-2.6.32.patch
+# Fix build for 2.6.34 (Eric Piel: https://patchwork.kernel.org/patch/90678/ )
+Patch7:		psb-kmod-4.41.1-2.6.34.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExclusiveArch:	i586 i686
 
@@ -71,6 +73,7 @@ for kernel_version  in %{?kernel_versions} ; do
 %patch6 -p1 -b .build2632
   fi
 %patch4 -p1 -b .drmpsb
+%patch7 -p0 -b .build2634
  popd
 done
 
@@ -101,6 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 22 2010 Adam Williamson <adamwill AT shaw DOT ca> - 4.41.1-12
+- add 2.6.34.patch (from Eric Piel, fixes build on 2.6.34)
+
 * Fri May 21 2010 Adam Williamson <adamwill AT shaw DOT ca> - 4.41.1-11
 - add 2.6.32.patch (from Gentoo via Mandriva, fixes build on 2.6.32)
 
