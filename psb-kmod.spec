@@ -7,7 +7,7 @@
 
 Name:		psb-kmod
 Version:	4.41.1
-Release:	12%{?dist}.1
+Release:	13%{?dist}
 Summary:	Kernel module for Poulsbo graphics chipsets
 
 Group:		System Environment/Kernel
@@ -36,6 +36,12 @@ Patch5:		psb-kernel-source-4.41.1-i2c-intelfb.patch
 Patch6:		psb-kernel-source-4.41.1-2.6.32.patch
 # Fix build for 2.6.34 (Eric Piel: https://patchwork.kernel.org/patch/90678/ )
 Patch7:		psb-kmod-4.41.1-2.6.34.patch
+# From Matthew Garrett: declare module firmware
+Patch8:		0001-psb-Declare-firmware.patch
+# From Matthew Garrett: clean up debug error
+Patch9:		0002-psb-If-not-asking-for-debug-is-an-error-I-want-to-be.patch
+# From Matthew Garrett: fix framebuffer
+Patch10:	0003-psb-Fix-framebuffer.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExclusiveArch:	i586 i686
 
@@ -74,6 +80,9 @@ for kernel_version  in %{?kernel_versions} ; do
   fi
 %patch4 -p1 -b .drmpsb
 %patch7 -p0 -b .build2634
+%patch8 -p1 -b .firmware
+%patch9 -p1 -b .debug
+%patch10 -p1 -b .framebuffer
  popd
 done
 
@@ -104,6 +113,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug 04 2010 Adam Williamson <adamwill AT shaw DOT ca> - 4.41.1-13
+- add three patches from Matthew Garrett:
+	+ Declare-firmware.patch (declare module firmware)
+	+ If-not-asking-for-debug...patch (clean up debug error)
+	+ Fix-framebuffer.patch (fix framebuffer)
+
 * Tue Jul 27 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 4.41.1-12.1
 - rebuild for new kernel
 
