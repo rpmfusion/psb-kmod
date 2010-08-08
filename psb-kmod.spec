@@ -7,7 +7,7 @@
 
 Name:		psb-kmod
 Version:	4.41.1
-Release:	13%{?dist}
+Release:	13%{?dist}.1
 Summary:	Kernel module for Poulsbo graphics chipsets
 
 Group:		System Environment/Kernel
@@ -113,6 +113,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Aug 08 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 4.41.1-13.1
+- rebuild for new kernel
+
 * Wed Aug 04 2010 Adam Williamson <adamwill AT shaw DOT ca> - 4.41.1-13
 - add three patches from Matthew Garrett:
 	+ Declare-firmware.patch (declare module firmware)
