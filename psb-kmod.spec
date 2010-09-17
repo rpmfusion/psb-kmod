@@ -7,7 +7,7 @@
 
 Name:		psb-kmod
 Version:	4.41.1
-Release:	13%{?dist}.6
+Release:	14%{?dist}
 Summary:	Kernel module for Poulsbo graphics chipsets
 
 Group:		System Environment/Kernel
@@ -42,6 +42,8 @@ Patch8:		0001-psb-Declare-firmware.patch
 Patch9:		0002-psb-If-not-asking-for-debug-is-an-error-I-want-to-be.patch
 # From Matthew Garrett: fix framebuffer
 Patch10:	0003-psb-Fix-framebuffer.patch
+# From Lubomir Rintel: fix build for 2.6.35
+Patch11:	psb-kmod-4.41.1-overflow.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExclusiveArch:	i586 i686
 
@@ -83,6 +85,7 @@ for kernel_version  in %{?kernel_versions} ; do
 %patch8 -p1 -b .firmware
 %patch9 -p1 -b .debug
 %patch10 -p1 -b .framebuffer
+%patch11 -p1 -b .overflow
  popd
 done
 
@@ -113,6 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep 17 2010 Adam Williamson <adamwill AT shaw DOT ca> - 4.41.1-14
+- add a patch from Lubomir Rintel to fix for kernel 2.6.35
+
 * Sat Sep 11 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 4.41.1-13.6
 - rebuild for new kernel
 
