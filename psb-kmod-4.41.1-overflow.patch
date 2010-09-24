@@ -1,11 +1,11 @@
---- a/drm_drv.c
-+++ b/drm_drv.c
-@@ -649,7 +649,7 @@ long drm_unlocked_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+--- psb-kernel-source-4.41.1/drm_drv.c	2009-04-15 20:25:01.000000000 -0700
++++ psb-kernel-source-4.41.1/drm_drv.c.new	2010-09-24 07:23:55.885426364 -0700
+@@ -649,7 +649,7 @@
  
-        if (cmd & IOC_IN) {
-                if (copy_from_user(kdata, (void __user *)arg,
--                                  _IOC_SIZE(cmd)) != 0) {
+ 	if (cmd & IOC_IN) {
+ 		if (copy_from_user(kdata, (void __user *)arg,
+-				   _IOC_SIZE(cmd)) != 0) {
 +                                  _IOC_SIZE(cmd) & 0x1ff) != 0) {
-                        retcode = -EACCES;
-                        goto err_i1;
-                }
+ 			retcode = -EACCES;
+ 			goto err_i1;
+ 		}
