@@ -3,11 +3,11 @@
 # "buildforkernels newest" macro for just that build; immediately after
 # queuing that build enable the macro again for subsequent builds; that way
 # a new akmod package will only get build when a new one is actually needed
-%define buildforkernels newest
+#define buildforkernels newest
 
 Name:		psb-kmod
 Version:	4.41.1
-Release:	14%{?dist}.12
+Release:	15%{?dist}
 Summary:	Kernel module for Poulsbo graphics chipsets
 
 Group:		System Environment/Kernel
@@ -44,6 +44,7 @@ Patch9:		0002-psb-If-not-asking-for-debug-is-an-error-I-want-to-be.patch
 Patch10:	0003-psb-Fix-framebuffer.patch
 # From Lubomir Rintel: fix build for 2.6.35
 Patch11:	psb-kmod-4.41.1-overflow.patch
+Patch12:	0001-Attempt-to-deal-with-psb_dispatch_raster-NULL-derefe.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExclusiveArch:	i586 i686
 
@@ -86,6 +87,7 @@ for kernel_version  in %{?kernel_versions} ; do
 %patch9 -p1 -b .debug
 %patch10 -p1 -b .framebuffer
 %patch11 -p1 -b .overflow
+%patch12 -p1 -b .nullderef
  popd
 done
 
@@ -116,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jul 10 2011 Nicolas Chauvet <kwizart@gmail.com> - 4.41.1-15
+- Add patch from Lubomir Rintel - rfbz#1676
+
 * Sat May 28 2011 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 4.41.1-14.12
 - rebuild for updated kernel
 

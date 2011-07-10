@@ -1,0 +1,32 @@
+From 8bd7c585fc7b8636187843a0f55f00c2eb0cc826 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Sun, 13 Mar 2011 15:41:41 +0100
+Subject: [PATCH] Attempt to deal with psb_dispatch_raster() NULL dereferences:
+
+[10799.942597] BUG: unable to handle kernel at 0000023c
+[10799.942597] IP: [<f861a137>] psb_dispatch_raster+0x19/0x205 [psb]
+[11046.173915] *pde = 22875067 *pte = 00000000
+[11046.173915] Oops: 0000 [#1]
+---
+ psb_schedule.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/psb_schedule.c b/psb_schedule.c
+index 959f8f9..572fdc6 100644
+--- a/psb_schedule.c
++++ b/psb_schedule.c
+@@ -824,6 +824,11 @@ static void psb_dispatch_raster(struct drm_psb_private *dev_priv,
+ 	uint32_t flags;
+ 	uint32_t mask;
+ 
++	if (!task) {
++		DRM_ERROR("Null task passed to psb_dispatch_raster().\n");
++		return;
++	}
++
+ 	task->reply_flags |= reply_flag;
+ 	flags = task->reply_flags;
+ 	mask = PSB_RF_FIRE_RASTER;
+-- 
+1.7.1
+
