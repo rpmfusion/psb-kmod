@@ -7,7 +7,7 @@
 
 Name:		psb-kmod
 Version:	4.41.1
-Release:	15%{?dist}.3
+Release:	15%{?dist}.4
 Summary:	Kernel module for Poulsbo graphics chipsets
 
 Group:		System Environment/Kernel
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Oct 22 2011 Nicolas Chauvet <kwizart@gmail.com> - 4.41.1-15.4
+- rebuild for updated kernel
+
 * Sun Sep 18 2011 Nicolas Chauvet <kwizart@gmail.com> - 4.41.1-15.3
 - rebuild for updated kernel
 
